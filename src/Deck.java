@@ -63,8 +63,13 @@ public class Deck {
 	 */
 	public void shuffle() {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 4 *** */
+		for( int k = size - 1; k >= 0; k-- ) {
+            int r = (int)(Math.random() * k);
+            Card tmp = cards.get(r);
+            cards.set(r, cards.get(k));
+            cards.set(k, tmp);
 	}
-
+	}
 	/**
 	 * Deals a card from this deck.
 	 * @return the card just dealt, or null if all the cards have been
