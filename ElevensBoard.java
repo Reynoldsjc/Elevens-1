@@ -1,4 +1,7 @@
 import java.util.List;
+
+import javax.rmi.ssl.SslRMIClientSocketFactory;
+
 import java.util.ArrayList;
 
 /**
@@ -54,6 +57,12 @@ public class ElevensBoard extends Board {
 	@Override
 	public boolean isLegal(List<Integer> selectedCards) {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+		boolean r = false;
+		if (containsJQK(selectedCards) || containsPairSum11(selectedCards))
+		{
+			r = true;
+		}
+		return r;
 	}
 
 	/**
@@ -67,6 +76,8 @@ public class ElevensBoard extends Board {
 	@Override
 	public boolean anotherPlayIsPossible() {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+		List<Integer> cardIndexes = cardIndexes();
+		return containsPairSum11(cardIndexes) || containsJQK(cardIndexes);
 	}
 
 	/**
@@ -79,6 +90,18 @@ public class ElevensBoard extends Board {
 	 */
 	private boolean containsPairSum11(List<Integer> selectedCards) {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+		boolean found = false;
+		for (int i = 0; i < selectedCards.size(); i++)
+		{
+			for (int j = 0; j < selectedCards.size(); j++)
+			{
+				if (cardAt(selectedCards.get(i)).pointValue() + cardAt(selectedCards.get(j)).pointValue() == 11)
+				{
+					found = true;
+				}
+			}
+		}
+		return found;
 	}
 
 	/**
@@ -91,5 +114,25 @@ public class ElevensBoard extends Board {
 	 */
 	private boolean containsJQK(List<Integer> selectedCards) {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+		boolean j = false;
+		boolean q = false;
+		boolean k = false;
+
+		for (int i = 0; i < selectedCards.size(); i++)
+		{
+			if (cardAt(selectedCards.get(i)).rank() == "jack")
+			{
+				j = true;
+			}
+			if (cardAt(selectedCards.get(i)).rank() == "queen")
+			{
+				q = true;
+			}
+			if (cardAt(selectedCards.get(i)).rank() == "king")
+			{
+				k = true;
+			}
+		}
+		return j && q && k;
 	}
 }
